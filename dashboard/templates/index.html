@@ -20,7 +20,7 @@ word-wrap: break-word;
 .card{
     padding: 5px;
     background: white;
-    height : 250px;
+    height : 300px;
     overflow: auto;
 }
   .card-title{
@@ -30,7 +30,9 @@ word-wrap: break-word;
 </style>
 
 <!---------------------------------------------------------------------------------------------------------->
+{% if post_list %}
 <h4 class=" site-heading my-4 mt-2 text-black">Latest Articles</h4>
+{% endif %}
 <div class="card-columns">
     {% for post in post_list %}
         <div class="card">
