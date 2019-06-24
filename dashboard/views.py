@@ -55,7 +55,7 @@ def scrape(request):
 
 def index(request):
     news = News.objects.all()
-    post = Post.objects.all().order_by('-published_date')
+    post = Post.objects.order_by('-published_date')[:6]
     context = {
         "object_list":news,
         "post_list":post,
@@ -63,7 +63,7 @@ def index(request):
     return render(request,'index.html',context = context)
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk = pk)
     return render(request, 'post_detail.html', {'post': post})
 
 def getmypost(request):
