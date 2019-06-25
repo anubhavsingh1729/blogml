@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% block content %}
-<div class="col-md-8 mt-3 ">
-        <h4 class=" site-heading my-4 mt-3 text-black">My Posts</h4>
+
+<div class="col-md-6 mt-3 ">
+        <h4 class=" site-heading my-4 mt-3 text-black">{{info}}</h4>
         {% for object in post_list %}
         <div class="card mb-4">
             <div class="card-body">

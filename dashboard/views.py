@@ -63,12 +63,16 @@ def index(request):
     return render(request,'index.html',context = context)
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk = pk)
+    post = get_object_or_404(Post, pk=pk)
     return render(request, 'post_detail.html', {'post': post})
 
 def getmypost(request):
     post = Post.objects.filter(author = request.user)
-    return render(request,'postlist.html',{'post_list':post})
+    return render(request,'postlist.html',{'post_list':post,'info':"My Articles"})
+
+def getallpost(request):
+    post = Post.objects.order_by('-published_date')
+    return render(request,'postlist.html',{'post_list':post,'info':"All Articles"})
 
 def logout(request):
     """Logs out user"""
