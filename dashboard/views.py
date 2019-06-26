@@ -68,11 +68,16 @@ def post_detail(request, pk):
 
 def getmypost(request):
     post = Post.objects.filter(author = request.user)
-    return render(request,'postlist.html',{'post_list':post,'info':"My Articles"})
+    return render(request,'postlist.html',{'post_list':post,'info':"My Articles",'deletebtn':1})
 
 def getallpost(request):
     post = Post.objects.order_by('-published_date')
     return render(request,'postlist.html',{'post_list':post,'info':"All Articles"})
+
+def deletemypost(request,pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('/postlist/user/')
 
 def logout(request):
     """Logs out user"""
