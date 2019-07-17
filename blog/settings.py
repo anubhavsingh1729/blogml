@@ -152,4 +152,4 @@ CKEDITOR_CONFIGS = {
         'toolbar': None,
     },
 }
-CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
