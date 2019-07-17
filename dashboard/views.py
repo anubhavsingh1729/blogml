@@ -1,26 +1,67 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from . models import News,Post
+
 import requests
+
 from bs4 import BeautifulSoup
+
 import json
+
 from datetime import timedelta, timezone, datetime
+
 import os
 import shutil
 import math
+
 from . forms import PostForm
 from django.views import generic
 
 from django.contrib.auth import logout as auth_logout
+
+import os
+from django.conf import settings
 # Create your views here.
+#------------------------------------LDA MODEL--------------------------------------------------------
+import gensim
+
+from gensim import models, corpora
+from gensim.similarities import MatrixSimilarity
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+
+import pandas as pd
+import re
+
+import pickle
+
+def clean_text(text):
+    STOPWORDS = stopwords.words('english')
+    tokenized_text = word_tokenize(text.lower())
+    cleaned_text = [t for t in tokenized_text if t not in STOPWORDS and re.match(r'[a-zA-Z\-][a-zA-Z\-]{2,}', t)]
+    return cleaned_text
+
+def findtopic(text):
+    dictionary = corpora.Dictionary.load_from_text(os.path.join(settings.BASE_DIR, 'dictionary'))
+    bow = dictionary.doc2bow(clean_text(text))
+    ldamodel = models.LdaModel.load('ldamodel')
+    topics = ldamodel[bow]
+    topicidlist = []
+    for i in topics:
+        topicid,prob = i
+        topicidlist.append(topicid)
+    return ''.join([str(x) for x in topicidlist])
 
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = datetime.now()
+            topics = findtopic(post.text)
+            post.topic = topics
             post.save()
+            form = PostForm()
     else:
         form = PostForm()
     return render(request, 'post_new.html', {'form': form})
@@ -64,7 +105,10 @@ def index(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'post_detail.html', {'post': post})
+    posttopic = post.topic
+    relpost = Post.objects.filter(topic = posttopic).exclude(pk=pk)
+    #print("relatedpost",relpost,"posttopic",posttopic)
+    return render(request, 'post_detail.html', {'post': post,'related':relpost})
 
 def getmypost(request):
     post = Post.objects.filter(author = request.user)

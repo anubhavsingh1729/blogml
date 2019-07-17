@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include(urls)),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
