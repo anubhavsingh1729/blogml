@@ -154,4 +154,4 @@ CKEDITOR_CONFIGS = {
         'toolbar': None,
     },
 }
-CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, "ckeditor/")
+#CKEDITOR_BASEPATH = '/home/ashappy208/blogML/blog/static/ckeditor/'
