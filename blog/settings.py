@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'l0!mw9(%rb5*4f7kw1w_!o^w46--$x&*6&*rdipkr6!esrdn)l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['blogml.herokuapp.com','127.0.0.1']
 
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -126,11 +127,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -155,3 +158,4 @@ CKEDITOR_CONFIGS = {
     },
 }
 CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, 'ckeditor/')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
