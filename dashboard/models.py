@@ -4,9 +4,6 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.utils import timezone
 
-from ckeditor_uploader.fields import RichTextUploadingField
-
-
 class News(models.Model):
     headline = models.CharField(max_length = 250)
     text = models.TextField()
@@ -19,7 +16,7 @@ class News(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    text = RichTextUploadingField()
+    text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     topic = models.CharField(max_length=10,default = -1)
