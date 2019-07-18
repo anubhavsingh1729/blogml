@@ -19,6 +19,8 @@ from dashboard import urls
 from django.conf.urls import url
 from dashboard import views
 
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +29,4 @@ urlpatterns = [
     url(r'^auth/', include('social_django.urls', namespace='social')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
