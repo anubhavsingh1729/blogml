@@ -130,7 +130,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -154,4 +154,4 @@ CKEDITOR_CONFIGS = {
         'toolbar': None,
     },
 }
-#CKEDITOR_BASEPATH = '/home/ashappy208/blogML/blog/static/ckeditor/'
+CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, 'ckeditor/')
