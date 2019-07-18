@@ -1,13 +1,14 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     <h2>New post</h2>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.media }}
+        {{ form.media}}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Post</button>
     </form>
 </div>
-{% endblock %}
 
+{% endblock %}
