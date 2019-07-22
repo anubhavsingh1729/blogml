@@ -21,7 +21,7 @@ class Post(models.Model):
     text = HTMLField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    topic = models.CharField(max_length=10,default = -1)
+    topic = models.IntegerField()
     objects = models.Manager
 
     def publish(self):

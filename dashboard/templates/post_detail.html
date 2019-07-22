@@ -3,7 +3,7 @@
 <div class="container">
 <h1>{% block title %} {{ post.title}} {% endblock title %}</h1>
         <p class=" text-muted">{{ post.author }} | {{ post.published_date }}</p>
-        <p style="border-bottom: 5px solid">{{ post.text|safe}}</p>
+        <p>{{ post.text|safe}}</p>
       </div>
 <div class="container">
     {% if related %}

@@ -45,11 +45,8 @@ def findtopic(text):
     bow = dictionary.doc2bow(clean_text(text))
     ldamodel = models.LdaModel.load('ldamodel')
     topics = ldamodel[bow]
-    topicidlist = []
-    for i in topics:
-        topicid,prob = i
-        topicidlist.append(topicid)
-    return ''.join([str(x) for x in topicidlist])
+    topics = sorted(topics, key=lambda item: item[1],reverse = True)
+    return topics[0][0]
 
 def post_new(request):
     if request.method == "POST":
