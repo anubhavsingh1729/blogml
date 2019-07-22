@@ -18,7 +18,6 @@ from django.urls import path, include
 from dashboard import urls
 from django.conf.urls import url
 from dashboard import views
-
 from django.conf.urls.static import static
 from django.conf import settings
 
