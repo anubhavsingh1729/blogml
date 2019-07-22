@@ -23,11 +23,11 @@ from django.conf import settings
 # Create your views here.
 #------------------------------------LDA MODEL--------------------------------------------------------
 import gensim
-
 from gensim import models, corpora
 from gensim.similarities import MatrixSimilarity
 from nltk import word_tokenize
 from nltk.corpus import stopwords
+
 
 import pandas as pd
 import re
