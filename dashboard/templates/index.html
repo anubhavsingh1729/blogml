@@ -22,8 +22,8 @@ word-wrap: break-word;
     background: white;
     height : 50vh;
     overflow: auto;
-    border: 1px solid #3388E1;
-    box-shadow: 0 10px 40px #E3E7EB
+    border: 1px solid #E3E7FF;
+    box-shadow: 0 16px 48px #E3E7EB
 
 }
   .card-title{
@@ -35,19 +35,24 @@ word-wrap: break-word;
 <!---------------------------------------------------------------------------------------------------------->
 <div class = "container">
         <h4 class=" site-heading my-4 mt-4 text-black">Latest Articles</h4>
-<div class="card-columns">
-    {% for post in post_list %}
-        <div class="card">
-            <h2 class="card-title">{{post.title}}</h2>
-            <p class="card-text text-muted h6">{{ post.author }} | {{ post.published_date}}  </p>
-            <p class = "card-text">{{ post.text|safe|slice:200 }}...</p> 
-        <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-primary">Read More &rarr;</a>
-    </div>
-        {% endfor %}
-    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mt-3 left">
+                    {% for post in post_list %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            <p class="card-text text-muted h6">{{ post.author }} | {{ post.published_date}} </p>
+                            <p class="card-text">{{post.text|safe|slice:":200" }}</p>
+                            <a href="{% url 'post_detail' post.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     <a href="{% url 'postlist'%}" class="btn btn-primary btn-lg btn-block">All Articles</a>
 </div>
-
 <div class="container">
         <div class="col-md-6 mt-0 ">
                 <h4 class=" site-heading my-4 mt-0 text-black">Today's News</h4>

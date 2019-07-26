@@ -93,7 +93,7 @@ def scrape(request):
 
 def index(request):
     news = News.objects.all()
-    post = Post.objects.order_by('-published_date')[:6]
+    post = Post.objects.order_by('-published_date')[:5]
     context = {
         "object_list":news,
         "post_list":post,
@@ -108,7 +108,7 @@ def post_detail(request, pk):
     return render(request, 'post_detail.html', {'post': post,'related':relpost})
 
 def getmypost(request):
-    post = Post.objects.filter(author = request.user)
+    post = Post.objects.filter(author = request.user).order_by('-published_date')
     return render(request,'postlist.html',{'post_list':post,'info':"My Articles",'deletebtn':1})
 
 def getallpost(request):
