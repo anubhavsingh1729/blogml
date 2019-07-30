@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import json
 
 from datetime import timedelta, timezone, datetime
+from django.utils import timezone
 
 import os
 import shutil
@@ -54,13 +55,27 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = datetime.now()
+            post.published_date = timezone.now()
             topics = findtopic(post.text)
             post.topic = topics
             post.save()
             form = PostForm()
     else:
         form = PostForm()
+    return render(request, 'post_new.html', {'form': form})
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
     return render(request, 'post_new.html', {'form': form})
 
 def scrape(request):
@@ -109,7 +124,7 @@ def post_detail(request, pk):
 
 def getmypost(request):
     post = Post.objects.filter(author = request.user).order_by('-published_date')
-    return render(request,'postlist.html',{'post_list':post,'info':"My Articles",'deletebtn':1})
+    return render(request,'postlist.html',{'post_list':post,'info':"My Articles",'deletebtn':1,'editbtn':1})
 
 def getallpost(request):
     post = Post.objects.order_by('-published_date')
