@@ -45,7 +45,7 @@ word-wrap: break-word;
                         <div class="card-body">
                             <h2  class="card-title">{{ post.title }}</h2>
                             <p class="card-text text-muted h6">{{ post.author }} | {{ post.published_date}}</p>
-                            <p class="card-text">{{post.text|striptags|slice:":20" }}&hellip;</p>
+                            <p class="card-text">{{post.text|striptags|slice:":200" }}&hellip;</p>
                             <a href="{% url 'post_detail' post.pk  %}" class ="btn btn-primary">Read More &raquo;</a>
                         </div>
                     </div>
